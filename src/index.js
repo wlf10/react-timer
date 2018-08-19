@@ -10,8 +10,8 @@ class Counter extends React.Component {
         };
 
         this.start = this.start.bind(this);
-        this.pause = this.pause.bind(this);
         this.stop = this.stop.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     start() {
@@ -24,13 +24,14 @@ class Counter extends React.Component {
         }
     }
 
-    stop() {
-        clearInterval(this.state.timer);
+    reset() {
+        // TODO: Тут хотел также остановить счетчик, но данные не обновляются
         this.state.time = 0;
     }
 
-    pause() {
+    stop() {
         clearInterval(this.state.timer);
+        this.state.timer = null;
     }
 
     secondToTime(sec) {
@@ -48,10 +49,10 @@ class Counter extends React.Component {
 
     render() {
         return <div>
-                <h2>{this.secondToTime(this.state.time)}</h2>
-                <div onClick={this.start}>Start</div>
-                <div onClick={this.pause}>Pause</div>
-                <div onClick={this.stop}>Stop</div>
+                <div className="timer">{this.secondToTime(this.state.time)}</div>
+                <div className="button" onClick={this.start}>Start</div>
+                <div className="button" onClick={this.stop}>Stop</div>
+                <div className="button" onClick={this.reset}>Reset</div>
             </div>;
     }
 }
