@@ -6,9 +6,11 @@ class Counter extends React.Component {
         super(props);
         this.state = {
             interval: 1,
-            time: 0,
-            timer: null
+            time: 0
         };
+
+        this.interval = 1;
+        this.timer = null;
 
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
@@ -19,12 +21,12 @@ class Counter extends React.Component {
     }
 
     start() {
-        if (!this.state.timer) {
-            this.state.timer = setInterval(() => {
+        if (!this.timer) {
+            this.timer = setInterval(() => {
                 this.setState(previousState => {
-                    return { time: previousState.time + this.state.interval };
+                    return { time: previousState.time + this.interval };
                 });
-            }, 1000 * this.state.interval)
+            }, 1000 * this.interval)
         }
     }
 
@@ -35,24 +37,24 @@ class Counter extends React.Component {
     }
 
     stop() {
-        clearInterval(this.state.timer);
-        this.state.timer = null;
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
     upIntr() {
-        clearInterval(this.state.timer);
-        this.state.timer = null;
+        clearInterval(this.timer);
+        this.timer = null;
 
-        this.state.interval += 1;
+        this.interval += 1;
         this.start();
     }
 
     downIntr() {
-        if (this.state.interval - 1 > 1) {
-            this.state.interval -= 1;
+        if (this.interval - 1 > 1) {
+            this.interval -= 1;
 
-            clearInterval(this.state.timer);
-            this.state.timer = null;
+            clearInterval(this.timer);
+            this.timer = null;
 
             this.start();
         }
