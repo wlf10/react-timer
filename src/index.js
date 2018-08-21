@@ -9,7 +9,6 @@ class Counter extends React.Component {
             time: 0
         };
 
-        this.interval = 1;
         this.timer = null;
 
         this.start = this.start.bind(this);
@@ -24,9 +23,9 @@ class Counter extends React.Component {
         if (!this.timer) {
             this.timer = setInterval(() => {
                 this.setState(previousState => {
-                    return { time: previousState.time + this.interval };
+                    return { time: previousState.time + this.state.interval };
                 });
-            }, 1000 * this.interval)
+            }, 1000 * this.state.interval)
         }
     }
 
@@ -45,13 +44,17 @@ class Counter extends React.Component {
         clearInterval(this.timer);
         this.timer = null;
 
-        this.interval += 1;
+        this.setState(previousState => {
+            return { interval: previousState.interval + 1 };
+        });
         this.start();
     }
 
     downIntr() {
-        if (this.interval - 1 > 1) {
-            this.interval -= 1;
+        if (this.interval - 1 >= 1) {
+            this.setState(previousState => {
+                return { interval: previousState.interval - 1 };
+            });
 
             clearInterval(this.timer);
             this.timer = null;
@@ -96,8 +99,8 @@ class Counter extends React.Component {
                     <div style={{ clear: 'left' }}></div>
                 </div>
 
-                <div className="button" onClick={this.upIntr} style={{ clear: 'left' }}>[+]</div>
-                <div className="button" onClick={this.downIntr} style={{ clear: 'left' }}>[-]</div>    
+                <div className="button" onClick={this.upIntr} style={{ float: 'left', fontSize: 20, marginLeft: 10, marginTop: 5}}> +1 </div>
+                <div className="button" onClick={this.downIntr} style={{ float: 'left', fontSize: 20, marginLeft: 10, marginTop: 5 }}> -1 </div>    
             </div>;
     }
 }
