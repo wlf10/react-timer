@@ -1,10 +1,20 @@
 import React from 'react';
-import Timer from 'components/Timer';
+import TaskList from 'components/TaskList';
 
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            'tasks': props.tasks
+        }
+    }
+
     render() {
-        return <div>
-                <Timer />
-            </div>;
+        return (
+            <div>
+                <TaskList items={this.state.tasks} />
+            </div>
+        );
     }
 }
